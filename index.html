@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alarm Watch</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <div id="watch-container">
+        <div id="display">
+            <h3 id="current-time">00:00:00 PM</h3>
+            <div id="alarm-picker">
+                <div id="timer">
+                    <div id="hour-container">
+                        <button id="hour" onclick="pickTime(event)">01</button>
+                        <ul id="hour-list" class="timeList"> </ul>
+                    </div>
+
+                    <div id="minit-container">
+                        <button id="minute" onclick="pickTime(event)">00</button>
+                        <ul id="minute-list" class="timeList"> </ul>
+                    </div>
+
+                    <div id="second-container">
+                        <button id="second" onclick="pickTime(event)">00</button>
+                        <ul id="second-list" class="timeList"> </ul>
+                    </div>
+
+                    <div id="am-pm-container">
+                        <button id="am-pm" onclick="pickTime(event)">AM</button>
+                        <ul id="am-pm-list" class="timeList"> </ul>
+                    </div>
+
+                </div>
+                <button id="set-alarm" onclick="fetchTime()">set Alarm</button>
+            </div>
+
+            <div id="alarm-container">
+                <h3 id="alarm-list-heading"> Alarms</h3>
+                <ul id="alarm-list">
+
+                </ul>
+            </div>
+
+        </div>
+
+        <div id="ring-container">
+            <button id="alarm-off-btn">
+                OFF
+                <!--<audio><source src="SoundFile.mp3" type="audio/mpeg" /></audio>-->
+            </button>
+        </div>
+    </div>
+
+    <script src="./script.js "></script>
+</body>
+
+</html>
