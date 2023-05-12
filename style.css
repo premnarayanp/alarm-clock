@@ -1,0 +1,190 @@
+#watch-container {
+    height: 60vh;
+    width: 400px;
+    margin: 50px auto;
+    /* position: relative; */
+}
+
+#display {
+    height: 100%;
+    width: 100%;
+    border-radius: 50px;
+    border: solid 10px rgb(239, 86, 86);
+    text-align: center;
+    padding: 20px;
+}
+
+#current-time {
+    font-size: 30px;
+    color: gray;
+    font-weight: 800;
+    font-family: sans-serif;
+    border: solid 1px gray;
+    border-radius: 50px;
+    background-color: aliceblue;
+}
+
+#alarm-picker {
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+}
+
+#timer {
+    display: flex;
+    justify-content: space-around;
+}
+
+#timer div button {
+    width: 35px;
+    cursor: pointer;
+    border-radius: 5px;
+    /* background-color: rgb(247, 228, 231); */
+    background-color: rgb(239, 109, 109);
+    color: white;
+    font-size: 15px;
+    font-weight: 800;
+    outline: none;
+    border: solid 1px gray;
+    font-family: sans-serif;
+}
+
+#set-alarm {
+    font-size: 18px;
+    font-weight: 700;
+    outline: none;
+    border: 0;
+    border-radius: 10px;
+    background-color: rgb(239, 109, 109);
+    color: white;
+    cursor: pointer;
+}
+
+#timer ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    height: 100px;
+    /* overflow-y: scroll; */
+    /* border: solid 2px blue; */
+}
+
+#timer ul li {
+    border: solid 1px blue;
+    cursor: pointer;
+}
+
+#timer ul li:hover {
+    background-color: gray;
+}
+
+#alarm-container {
+    width: 90%;
+    margin-top: 0;
+}
+
+#alarm-container h3 {
+    margin-top: 0;
+    font-size: 30px;
+    color: gray;
+    font-weight: 800;
+    font-family: sans-serif;
+    line-height: 0;
+}
+
+#alarm-list {
+    width: 100%;
+    margin-top: 0;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    height: 140px;
+    /* overflow-y: scroll; */
+    /* border: solid 2px cornflowerblue; */
+    /* border-radius: 20px; */
+}
+
+#alarm-list li {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    /* background-color: pink; */
+    margin-top: 10px;
+}
+
+.alarm-times {
+    font-size: 18px;
+    color: gray;
+    font-weight: 700;
+    font-family: sans-serif;
+}
+
+#ring-container {
+    position: absolute;
+    top: 30vh;
+    left: 35vw;
+    width: 36vw;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    /* background-color: pink; */
+}
+
+@keyframes changeShape {
+    from {
+        border-radius: 50%;
+        height: 100px;
+        width: 100px;
+    }
+    to {
+        border-radius: 50%;
+        height: 200px;
+        width: 200px;
+    }
+}
+
+#alarm-off-btn {
+    align-items: center;
+    background-color: rgb(245, 98, 98);
+    animation: changeShape 1s ease-in-out infinite alternate;
+    font-size: 40px;
+    color: white;
+    border: 0;
+    display: none;
+    cursor: pointer;
+}
+
+.alarm-delete-btn {
+    font-size: 15px;
+    font-weight: 800;
+    width: 80px;
+    cursor: pointer;
+    border-radius: 30px;
+    background-color: red;
+    color: white;
+    border: 0;
+    outline: none;
+}
+
+
+/* @keyframes changeShape {
+    from {
+        border-radius: 50%;
+        height: 100px;
+        width: 100px;
+    }
+    to {
+        border-radius: 50%;
+        height: 200px;
+        width: 200px;
+    }
+}
+
+#ring-container {
+    position: absolute;
+    top: 40vh;
+    left: 45%;
+    background-color: aqua;
+    animation: changeShape 1s ease-in-out infinite alternate;
+} */
