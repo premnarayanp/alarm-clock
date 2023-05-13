@@ -339,3 +339,59 @@ function renderAlarm(index) {
         document.getElementById('alarm-list').style = "overflow-y:scroll";
     }
 }
+
+
+//======Feature-7- delete alarm From list by renderListOfAlarm() and also clearSetTimeOut()=========
+//when alarm delete then need to render all Alarms in <ul> where index of alarm also change
+
+function renderListOfAlarm(alarmList) {
+    let alarmUlList = document.getElementById('alarm-list');
+    alarmUlList.innerHTML = "";
+
+    //if alarm deleted/render  and size <= 4 in list then ,set <u> scroll behavior none/scroll
+    if (alarmList.length <= 4) {
+        document.getElementById('alarm-list').style = "overflow-y: none";
+    } else if (alarmList.length > 4) {
+        document.getElementById('alarm-list').style = "overflow-y:scroll";
+    }
+
+    alarmList.forEach((alarm) => {
+        let li = document.createElement('li');
+        let index = alarmList.indexOf(alarm);
+        const hour = alarm.hour < 10 ? '0' + alarm.hour : alarm.hour;
+        const minute = alarm.minute < 10 ? '0' + alarm.minute : alarm.minute;
+        const second = alarm.second < 10 ? '0' + alarm.second : alarm.second;
+
+        li.innerHTML = `<span class="alarm-times">
+        ${hour+ ":" + minute + ":" +second +'  ' + alarm.am_pm}  
+                               </span>
+                               <button class="alarm-delete-btn" onclick="deleteAlarm(${index})" >Delete</button>
+                             `;
+        alarmUlList.appendChild(li);
+    });
+
+}
+
+//Delete the alarm
+//function deleteAlarm(alarmID) {
+function deleteAlarm(index) {
+    let newAlarmList = [];
+
+    newAlarmList = alarmList.filter((alarm) => alarmList.indexOf(alarm) != index);
+    // newAlarmList = alarmList.filter((alarm) => alarm.alarmID != alarmID);
+    //console.log("newList", newAlarmList);
+
+    clearTimeout(alarmList[index].stopTimeId);
+    alarmList = newAlarmList;
+
+    if (alarmList.length == 0) {
+        document.getElementById('alarm-list-heading').innerText = "No Alarms"
+        document.getElementById('alarm-list').innerHTML = "";
+        //localStorage.removeItem(alarmsKey);
+        //console.log("alarm Deleted from localStorage");
+        return;
+    }
+
+    //storeAlarmsInLocalStorage(alarmsKey, alarmList);
+    renderListOfAlarm(newAlarmList);
+}
