@@ -61,3 +61,76 @@ function setCurrentTime() {
 }
 // when page load then start setCurrentTime()
 setCurrentTime();
+
+//================Feature-2-CreateDropDownList & pick and show during onclick==============
+
+// create Dropdown List and 
+// pick times second/minute/hour/AM or PM from DropDown List
+function createDropdownList(e) {
+    let currentList;
+    let size;
+    let target = e.target;
+
+    if (target.id == 'hour') {
+        currentList = hourList;
+        size = 12;
+
+    } else if (target.id == 'minute') {
+        currentList = minuteList;
+        size = 60;
+    } else if (target.id == 'second') {
+        currentList = secondList;
+        size = 60;
+    } else {
+        currentList = AM_PMList;
+        size = -1;
+    }
+
+    //if reClick then toggle DropDownList, don,t need to again create DropdownList & render
+    if (currentList.innerHTML !== ' ') {
+        currentList.innerText = ' ';
+        currentList.style = 'overflow-y: none';
+        return;
+    }
+
+    // close another open Dropdown list
+    //clearAnotherTimeList();
+
+    //if Dropdown list have element then set scrolled
+    if (size != -1) {
+        currentList.style = 'overflow-y: scroll';
+    }
+
+    //create particulars  DropDown List on current target like hour,minutes ..etc
+    for (var i = target.id === 'hour' ? 1 : 0; i <= size; i++) {
+        let li = document.createElement('li');
+        // let li = `<li></li>`;
+        if (i <= 9) {
+            li.innerText = "0" + i;
+        } else {
+            li.innerText = i;
+        }
+        li.setAttribute('onclick', "setPickedTime(event)");
+        li.className = target.id + '-' + 'value';
+        // console.log(li);
+        currentList.appendChild(li);
+    }
+
+    // create AM PM list
+    if (size == -1) {
+        let am = document.createElement('li');
+        let pm = document.createElement('li');
+        am.innerText = 'AM'
+        am.setAttribute('onclick', "setPickedTime(event)");
+        am.className = target.id + '-' + 'value';
+
+        pm.innerText = 'PM'
+        pm.setAttribute('onclick', "setPickedTime(event)");
+        pm.className = target.id + '-' + 'value';
+        // console.log(am);
+
+        currentList.appendChild(am);
+        currentList.appendChild(pm);
+    }
+
+}
