@@ -227,7 +227,7 @@ function readyToCreateAlarm() {
 
     // don,t create more then 1 alarm and within 60 second/1 minutes  
     let checkAlarm = checkAlarmExist(alarmID, hour, minute, second, am_pm);
-    console.log("checkAlarm=", checkAlarm);
+    // console.log("checkAlarm=", checkAlarm);
     if (checkAlarm.isExist) {
         alert('Alarm already exist');
     } else {
@@ -306,7 +306,7 @@ function createAlarm({...alarm }, isUpdateIndex) {
     } else {
         //new alarm also need render/upend in <ul> list
         alarmList.push(alarm);
-        console.log(alarmList);
+        //console.log(alarmList);
         storeAlarmsInLocalStorage(alarmsKey, alarmList);
         let index = alarmList.length - 1;
         renderAlarm(index);
@@ -395,6 +395,8 @@ function deleteAlarm(index) {
     storeAlarmsInLocalStorage(alarmsKey, alarmList);
     renderListOfAlarm(newAlarmList);
 }
+
+
 
 
 // =========Feature-8-OFF alarm after alert and Reset alarm to again fire on same time=========
