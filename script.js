@@ -240,3 +240,48 @@ function readyToCreateAlarm() {
         }
     }
 }
+
+//======Feature-4- find alarmOnTime for setAlarm using getTimeInSecond and getAlarmOnTime ==========
+//convert hour+minutes+second into seconds
+function getTimeInSecond(hour, minute, second, ) {
+    let totalTime = 0;
+    totalTime += hour * 60 * 60;
+    totalTime += minute * 60;
+    totalTime += second;
+    return totalTime;
+}
+
+// fined alarmOnTime means time gap between current time and alarm set time
+//that find time for delay setTimeOut(), which time alarms need to play
+function getAlarmOnTime(pickedTimeInSecond, am_pm) {
+    let alarmOnTime = 0;
+    let currentTime = getCurrentTime();
+    let currentTimeInSecond = getTimeInSecond(currentTime.hour, currentTime.minute, currentTime.second);
+
+
+    if (currentTime.am_pm === am_pm) {
+        if (pickedTimeInSecond < currentTimeInSecond) {
+            alarmOnTime = 24 * 60 * 60 - currentTimeInSecond - pickedTimeInSecond;
+        } else {
+            alarmOnTime = pickedTimeInSecond - currentTimeInSecond;
+        }
+
+    } else {
+        alarmOnTime = 12 * 60 * 60 - currentTimeInSecond + pickedTimeInSecond;
+    }
+    return alarmOnTime;
+}
+
+// set alarm ...provide all requirement to create alarm
+function setAlarm(hour, minute, second, am_pm, alarmID, isUpdateIndex) {
+
+    let timeInSecond = getTimeInSecond(hour, minute, second);
+    let alarmOnTime = getAlarmOnTime(timeInSecond, am_pm);
+    let alarmOnTimeInMS = alarmOnTime * 1000;
+    //console.log(alarmOnTime);
+
+    createAlarm({ hour, minute, second, am_pm, alarmOnTimeInMS, alarmID }, isUpdateIndex);
+
+    //renderAlarm(alarmList.length - 1);
+    //renderAlarm(alarmID);
+}
