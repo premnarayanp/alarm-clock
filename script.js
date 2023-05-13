@@ -285,3 +285,31 @@ function setAlarm(hour, minute, second, am_pm, alarmID, isUpdateIndex) {
     //renderAlarm(alarmList.length - 1);
     //renderAlarm(alarmID);
 }
+
+//=========Feature-5- create alarm using setTimeout=======================
+//finally create alarm using setTimeout
+function createAlarm({...alarm }, isUpdateIndex) {
+
+    let stopTimeId = setTimeout(() => {
+        //playRing(alarm.alarmID);
+        alert("alarm is om..........");
+    }, alarm.alarmOnTimeInMS);
+
+    alarm.stopTimeId = stopTimeId;
+
+    //if alarm create/off then we need to create/update ,so it again ring on same time
+    //but don,t need to render because already in <ul> list
+    if (isUpdateIndex != -1) {
+        alarmList[isUpdateIndex] = alarm;
+        //storeAlarmsInLocalStorage(alarmsKey, alarmList);
+
+    } else {
+        //new alarm also need render/upend in <ul> list
+        alarmList.push(alarm);
+        console.log(alarmList);
+        //storeAlarmsInLocalStorage(alarmsKey, alarmList);
+        //let index = alarmList.length - 1;
+        //renderAlarm(index);
+    }
+
+}
