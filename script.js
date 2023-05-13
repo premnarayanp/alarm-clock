@@ -308,8 +308,34 @@ function createAlarm({...alarm }, isUpdateIndex) {
         alarmList.push(alarm);
         console.log(alarmList);
         //storeAlarmsInLocalStorage(alarmsKey, alarmList);
-        //let index = alarmList.length - 1;
-        //renderAlarm(index);
+        let index = alarmList.length - 1;
+        renderAlarm(index);
     }
 
+}
+
+//=========Feature-6- upend single alarm in <ul> and show =======================
+//when alarm create then need to upend single alarm in <ul>
+//function renderAlarm(alarmID, index) {
+function renderAlarm(index) {
+    document.getElementById('alarm-list-heading').innerText = "Alarms"
+    let alarmUlList = document.getElementById('alarm-list');
+    let alarm = alarmList[index];
+    let li = document.createElement('li');
+    const hour = alarm.hour < 10 ? '0' + alarm.hour : alarm.hour;
+    const minute = alarm.minute < 10 ? '0' + alarm.minute : alarm.minute;
+    const second = alarm.second < 10 ? '0' + alarm.second : alarm.second;
+
+    li.innerHTML = `<span class="alarm-times">
+                              ${hour+ ":" + minute + ":" +second +'  ' + alarm.am_pm} 
+                           </span>
+                           <button class="alarm-delete-btn" onclick="deleteAlarm(${index})" >Delete</button>
+                        `;
+
+    alarmUlList.appendChild(li);
+
+    //if alarm created and size > 4 in list then ,set <u> scroll behavior as "scroll"
+    if (alarmList.length > 4) {
+        document.getElementById('alarm-list').style = "overflow-y:scroll";
+    }
 }
