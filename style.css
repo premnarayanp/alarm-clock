@@ -1,5 +1,5 @@
 #watch-container {
-    height: 60vh;
+    height: 62vh;
     width: 400px;
     margin: 50px auto;
     /* position: relative; */
@@ -100,6 +100,7 @@
     padding: 0;
     margin: 0;
     height: 140px;
+    border-top: solid 2px gray;
     /* overflow-y: scroll; */
     /* border: solid 2px cornflowerblue; */
     /* border-radius: 20px; */

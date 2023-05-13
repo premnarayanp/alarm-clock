@@ -301,11 +301,13 @@ function createAlarm({...alarm }, isUpdateIndex) {
     //but don,t need to render because already in <ul> list
     if (isUpdateIndex != -1) {
         alarmList[isUpdateIndex] = alarm;
+        storeAlarmsInLocalStorage(alarmsKey, alarmList);
 
     } else {
         //new alarm also need render/upend in <ul> list
         alarmList.push(alarm);
         console.log(alarmList);
+        storeAlarmsInLocalStorage(alarmsKey, alarmList);
         let index = alarmList.length - 1;
         renderAlarm(index);
     }
@@ -385,12 +387,12 @@ function deleteAlarm(index) {
     if (alarmList.length == 0) {
         document.getElementById('alarm-list-heading').innerText = "No Alarms"
         document.getElementById('alarm-list').innerHTML = "";
-        //localStorage.removeItem(alarmsKey);
-        //console.log("alarm Deleted from localStorage");
+        localStorage.removeItem(alarmsKey);
+        console.log("alarm key Deleted from localStorage");
         return;
     }
 
-    //storeAlarmsInLocalStorage(alarmsKey, alarmList);
+    storeAlarmsInLocalStorage(alarmsKey, alarmList);
     renderListOfAlarm(newAlarmList);
 }
 
@@ -474,3 +476,53 @@ function alarmOff(stopRingId, alarmID) {
     // deleteAlarm(index);
     // setAlarm(hour, minute, second, am_pm);
 }
+
+
+//Extra(Feature-10)-set alarmList in LocalStorage and get saved alarm after reloading===========
+// store the list of Alarm in LocalStorage ,so after reloading we get
+function storeAlarmsInLocalStorage(key, alarmList) {
+    let alarmListString = JSON.stringify(alarmList);
+    localStorage.setItem(key, alarmListString);
+    console.log("Alarms Stored successfully");
+}
+
+// get the list of Alarm from LocalStorage ,so we get our saved Alarm
+function getAlarmsFromLocalStorage(key) {
+    let alarmListString = localStorage.getItem(key);
+    let alarmList = JSON.parse(alarmListString);
+    console.log("Alarms get successfully");
+    return alarmList;
+}
+
+
+// create and render the list of saved Alarm that saved in LocalStorage
+//because when refresh ,all alarms destroyed but alarm data also saved in localStorage
+//so we need recreate the alarms using saved data/times and render it.
+function recreateAndRenderAlarm() {
+    let alarms = getAlarmsFromLocalStorage(alarmsKey);
+    if (alarms == null) {
+        document.getElementById('alarm-list-heading').innerText = "No Alarms"
+        return;
+    }
+
+
+    let isUpdateIndex = -1;
+    // there isUpdateIndex = -1; means we don't want to update,means we create new alarm and need to append in <u> list
+
+    alarms.forEach((alarm) => {
+        setAlarm(alarm.hour, alarm.minute, alarm.second, alarm.am_pm, alarm.alarmID, isUpdateIndex);
+    });
+    // renderListOfAlarm(alarms);
+
+    //Notes:-
+    // we Don't need to call renderListOfAlarm(), because there are two function for render alarms
+    // first is renderListOfAlarm(); and second is renderAlarm();
+    // renderListOfAlarm(); is needed when  we delete alarms, that rendered all alarms but
+    // renderAlarm() that append single alarm in current <ul> list and 
+    // called after when  alarm created,that render single alarm
+    // there we iterate alarms and we just create  single-single alarm and again called renderAlarm() for Each
+}
+
+
+//when reload then auto called recreateAndRenderAlarm(), that create saved alarm and render in UI <ul>
+recreateAndRenderAlarm();
