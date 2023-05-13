@@ -64,6 +64,39 @@ setCurrentTime();
 
 //================Feature-2-CreateDropDownList & pick and show during onclick==============
 
+// clear hour,minutes ,second , am_pm picker DropdownList
+function clearAnotherTimeList() {
+    for (let i = 0; i < 4; i++) {
+        timeList[i].innerHTML = ' ';
+        timeList[i].style = 'overflow-y: none';
+    }
+    // OR
+    // hourList.innerHTML = ' ';
+    // minuteList.innerHTML = ' ';
+    // secondList.innerHTML = ' ';
+    // AM_PMList.innerHTML = ' ';
+}
+
+// set current picked time (second/minute/hour/AM-PM ) in current picked button from DropdownList
+// means set picked alarm time
+function setPickedTime(e) {
+    let value = e.target.innerText;
+    //console.log(value);
+    //console.log(e.target.className);
+
+    if (e.target.className == 'hour-value') {
+        hourBtn.innerText = value;
+    } else if (e.target.className == 'minute-value') {
+        minuteBtn.innerText = value;
+    } else if (e.target.className == 'second-value') {
+        secondBtn.innerText = value;
+    } else {
+        am_pmBtn.innerText = value;
+    }
+
+    clearAnotherTimeList();
+}
+
 // create Dropdown List and 
 // pick times second/minute/hour/AM or PM from DropDown List
 function createDropdownList(e) {
@@ -94,7 +127,7 @@ function createDropdownList(e) {
     }
 
     // close another open Dropdown list
-    //clearAnotherTimeList();
+    clearAnotherTimeList();
 
     //if Dropdown list have element then set scrolled
     if (size != -1) {
