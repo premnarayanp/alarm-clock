@@ -1,5 +1,23 @@
+var hourBtn = document.getElementById('hour');
+var minuteBtn = document.getElementById('minute');
+var secondBtn = document.getElementById('second');
+var am_pmBtn = document.getElementById('am-pm');
+
+var hourList = document.getElementById('hour-list');
+var minuteList = document.getElementById('minute-list');
+var secondList = document.getElementById('second-list');
+var AM_PMList = document.getElementById('am-pm-list');
+
 const currentTimeTag = document.getElementById('current-time');
 
+var timeList = document.getElementsByClassName('timeList');
+
+var ringAudio = new Audio('./assets/alarmRing.mp3');
+
+const alarmsKey = '_myAlarms_';
+
+var alarmList = [];
+//var alarmList={ hour: 0, minute: 0,second: 0, am_pm: '', alarmOnTime: 0, alarmId: '12345'}
 
 // get current time in hour,minutes,second and AM or PM
 function getCurrentTime() {
