@@ -291,23 +291,21 @@ function setAlarm(hour, minute, second, am_pm, alarmID, isUpdateIndex) {
 function createAlarm({...alarm }, isUpdateIndex) {
 
     let stopTimeId = setTimeout(() => {
-        //playRing(alarm.alarmID);
         alert("alarm is om..........");
+        alarmOff(alarm.alarmID);
     }, alarm.alarmOnTimeInMS);
 
     alarm.stopTimeId = stopTimeId;
 
-    //if alarm create/off then we need to create/update ,so it again ring on same time
+    //if alarm create/off then we need to create/update ,so it again alert on same time
     //but don,t need to render because already in <ul> list
     if (isUpdateIndex != -1) {
         alarmList[isUpdateIndex] = alarm;
-        //storeAlarmsInLocalStorage(alarmsKey, alarmList);
 
     } else {
         //new alarm also need render/upend in <ul> list
         alarmList.push(alarm);
         console.log(alarmList);
-        //storeAlarmsInLocalStorage(alarmsKey, alarmList);
         let index = alarmList.length - 1;
         renderAlarm(index);
     }
@@ -394,4 +392,23 @@ function deleteAlarm(index) {
 
     //storeAlarmsInLocalStorage(alarmsKey, alarmList);
     renderListOfAlarm(newAlarmList);
+}
+
+
+//=========Feature-8-OFF alarm after alert and Reset alarm to again fire on same time=========
+//Notes:- when delete Alarm then Permanently delete but ,but after fire alarm ,it show 
+//properly in list so need to reset to fire on same time again & again ,till not deleted
+
+function alarmOff(alarmID) {
+    console.log("Off");
+
+    alarmList.forEach((alarm) => {
+        if (alarm.alarmID == alarmID) {
+            index = alarmList.indexOf(alarm);
+            console.log("index=", index);
+            setAlarm(alarm.hour, alarm.minute, alarm.second, alarm.am_pm, alarm.alarmID, index);
+            return;
+        }
+    });
+
 }
