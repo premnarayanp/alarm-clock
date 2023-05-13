@@ -23,3 +23,23 @@ function getCurrentTime() {
     };
     return currentTime;
 }
+
+// set current time in hour,minutes,second and AM or PM in web page in <h1> tag
+function setCurrentTime() {
+    setInterval(() => {
+        let currentTime = getCurrentTime();
+        //currentTimeTag.innerText = currentTime.hour + ":" + currentTime.minute + ":" + currentTime.second + ' ' + currentTime.am_pm;
+
+        let hour = currentTime.hour;
+        hour = hour < 10 ? "0" + hour : hour;
+        let minute = currentTime.minute;
+        minute = minute < 10 ? "0" + minute : minute;
+        let second = currentTime.second;
+        second = second < 10 ? "0" + second : second;
+        let am_pm = currentTime.am_pm;
+
+        currentTimeTag.innerText = hour + ":" + minute + ":" + second + ' ' + am_pm;
+    }, 1000);
+}
+// when page load then start setCurrentTime()
+setCurrentTime();
