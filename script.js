@@ -167,3 +167,76 @@ function createDropdownList(e) {
     }
 
 }
+
+//======Feature-3-ReadyToCrateAlarm ,Fetch picked time, check uniq,uniqID==============
+
+//generate uniq alarmId like alarms set as (02:30:50 AM) then id is "02305012"
+//'02'+'30'+'50'+'12'="02305012"
+function getUniQId(hour, minute, second, am_pm) {
+    // console.log("...alarm in uniq", alarm)
+    let alarmId = hour.toString() + minute.toString() + second.toString();
+    alarmId += am_pm === 'AM' ? 12 : 24;
+    return alarmId;
+}
+
+
+//if we create same times alarm and within 60 second range again  then show alert and return
+//because no sense for more then 1 alarms for same time or within 60 second range
+function checkAlarmExist(alarmID, hour, minute, second, am_pm) {
+    let size = alarmList.length;
+    if (size == 0) {
+        return {
+            isExist: false,
+            isValidGap: true
+        };
+    }
+    //check alarm on basis alarmId
+    for (let i = 0; i < size; i++) {
+        let alarm = alarmList[i];
+        //if(alarm.am_pm==am_pm && alarm.hour==alarm.hour && alarm.minute==minute){
+        if (alarm.alarmID == alarmID) {
+            return {
+                isExist: true,
+                isValidGap: false,
+            };
+        } else if (alarm.am_pm == am_pm && alarm.hour == hour) {
+            let totalSecond1 = minute * 60 + second;
+            let totalSecond2 = alarm.minute * 60 + alarm.second;
+
+            let diff = totalSecond1 > totalSecond2 ? (totalSecond1 - totalSecond2) : totalSecond2 - totalSecond1;
+
+            if (diff < 60) {
+                return { isExist: false, isValidGap: false, alarm: alarm, diff: diff }
+            }
+        }
+    }
+
+    return { isExist: false, isValidGap: true }
+}
+
+//init points for alarm to create
+//fetch picked time hour/minute/second/AM/PM  from..
+function readyToCreateAlarm() {
+    let hour = parseInt(hourBtn.innerText);
+    let minute = parseInt(minuteBtn.innerText);
+    let second = parseInt(secondBtn.innerText);
+    let am_pm = am_pmBtn.innerText;
+    //console.log(hour,minute,second,am_pm);
+
+    const alarmID = getUniQId(hour, minute, second, am_pm);
+
+    // don,t create more then 1 alarm and within 60 second/1 minutes  
+    let checkAlarm = checkAlarmExist(alarmID, hour, minute, second, am_pm);
+    console.log("checkAlarm=", checkAlarm);
+    if (checkAlarm.isExist) {
+        alert('Alarm already exist');
+    } else {
+        if (checkAlarm.isValidGap) {
+            let isUpdateIndex = -1;
+            setAlarm(hour, minute, second, am_pm, alarmID, isUpdateIndex);
+        } else {
+            let alarm = checkAlarm.alarm;
+            alert(`Already Exist alarm:[${alarm.hour}:${alarm.minute}:${alarm.second} ${alarm.am_pm}] in 60 second range And diff is:${checkAlarm.diff} Second`);
+        }
+    }
+}
