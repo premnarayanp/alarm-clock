@@ -287,12 +287,12 @@ function setAlarm(hour, minute, second, am_pm, alarmID, isUpdateIndex) {
 }
 
 //=========Feature-5- create alarm using setTimeout=======================
-//finally create alarm using setTimeout
+//finally create alarm using setTimeout and show alert/animation & audio Ring
 function createAlarm({...alarm }, isUpdateIndex) {
 
     let stopTimeId = setTimeout(() => {
-        alert("alarm is om..........");
-        alarmOff(alarm.alarmID);
+        //alert("alarm is om..........");
+        playRing(alarm.alarmID);
     }, alarm.alarmOnTimeInMS);
 
     alarm.stopTimeId = stopTimeId;
@@ -395,14 +395,64 @@ function deleteAlarm(index) {
 }
 
 
-//=========Feature-8-OFF alarm after alert and Reset alarm to again fire on same time=========
-//Notes:- when delete Alarm then Permanently delete but ,but after fire alarm ,it show 
-//properly in list so need to reset to fire on same time again & again ,till not deleted
+// =========Feature-8-OFF alarm after alert and Reset alarm to again fire on same time=========
+// Notes:- when delete Alarm then Permanently delete but ,but after fire alarm ,it show 
+// properly in list so need to reset to fire on same time again & again ,till not deleted
 
-function alarmOff(alarmID) {
-    console.log("Off");
+// function alarmOff(alarmID) {
+//     console.log("Off");
+
+//     alarmList.forEach((alarm) => {
+//         if (alarm.alarmID == alarmID) {
+//             index = alarmList.indexOf(alarm);
+//             console.log("index=", index);
+//             setAlarm(alarm.hour, alarm.minute, alarm.second, alarm.am_pm, alarm.alarmID, index);
+//             return;
+//         }
+//     });
+
+// }
+
+
+
+//===Extra(Feature-8)-when Alarm on ,Show Animated OFF Button & Play/Pause Ring Audio Ringtone=======
+
+//Play ring when Alarm is fired
+//Show Animated  OFF Button 
+function playRing(alarmId) {
+    console.log("played");
+    ringAudio.play();
+
+    const alarmOFFBtn = document.getElementById('alarm-off-btn');
+    alarmOFFBtn.style = 'display: block';
+
+    let stopRingId = setTimeout(() => {
+        alarmOff(stopRingId, alarmId);
+    }, 1000 * 30);
+
+    // if we want OFF alarm ring before 30 second ,then click on OFF btn
+    alarmOFFBtn.setAttribute('onclick', `alarmOff(${stopRingId}, ${alarmId})`);
+
+}
+
+
+//===Extra(Feature-9)-alarmOff OFF alarm/pause Ring audio/close Animated Button & reset Alarm========
+// Notes:- when delete Alarm then Permanently delete but ,but after fire alarm ,it show 
+// properly in list so need to reset to fire on same time again & again ,till not deleted
+
+//close ringAudio and close animation ...
+function alarmOff(stopRingId, alarmID) {
+    const alarmOFFBtn = document.getElementById('alarm-off-btn');
+    alarmOFFBtn.style = 'display: none';
+    ringAudio.pause();
+    ringAudio.currentTime = 0;
+    clearTimeout(stopRingId);
+    console.log("paused");
 
     alarmList.forEach((alarm) => {
+        //console.log(alarm.alarmID == alarmID);
+        // after off Alarm ,recreate/reUpdate alarm, so alarm again play after 24 hour, on same time
+
         if (alarm.alarmID == alarmID) {
             index = alarmList.indexOf(alarm);
             console.log("index=", index);
@@ -411,4 +461,16 @@ function alarmOff(alarmID) {
         }
     });
 
+    //this is mor redundant and not suitable..
+    //let index=alarmList.indexOf(alarm);
+    //deleteAlarm(alarmList.indexOf(alarm));
+    // let hour = alarm.hour;                         
+    // let minute = alarm.minute;
+    // let second = alarm.second;
+    // let am_pm = alarm.am_pm;
+
+    // const index = alarmList.indexOf(alarm);
+    // console.log(index);
+    // deleteAlarm(index);
+    // setAlarm(hour, minute, second, am_pm);
 }
