@@ -1,3 +1,4 @@
+//Done
 var hourBtn = document.getElementById('hour');
 var minuteBtn = document.getElementById('minute');
 var secondBtn = document.getElementById('second');
