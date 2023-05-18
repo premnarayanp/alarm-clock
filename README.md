@@ -1,3 +1,6 @@
+# git:-https://github.com/premnarayanp/skill-test.git
+# video Link:-https://youtu.be/ci2uGWYC3SU
+# host:-https://premnarayanp.github.io/skill-test/
 # skill-test
 # Projects:-Alarm
 # Projects-Subdirectory:-assets
